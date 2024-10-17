@@ -7,5 +7,4 @@ contract USDCMock is ERC20 {
     constructor() ERC20("USDC", "USDC") {
         _mint(msg.sender, 10e18);
     }
-
 }

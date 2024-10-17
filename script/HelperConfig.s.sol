@@ -21,8 +21,8 @@ contract HelperConfig is Script {
     uint256 constant ZKSYNC_SEPOLIA_CHAIN_ID = 300;
     uint256 constant ETH_SEPOLIA_CHAIN_ID = 11155111;
 
-    address constant BURNER_WALLET  = 0x701477467321474712bACA6779FE8926528B3c93;
-    address constant ANVIL_DEFAULT_SENDER  = 0x1804c8AB1F12E6bbf3894d4083f33e07309d1f38;
+    address constant BURNER_WALLET = 0x701477467321474712bACA6779FE8926528B3c93;
+    address constant ANVIL_DEFAULT_SENDER = 0x1804c8AB1F12E6bbf3894d4083f33e07309d1f38;
 
     constructor() {
         networkConfigs[ETH_SEPOLIA_CHAIN_ID] = getEthSepoliaConfig();
@@ -43,14 +43,18 @@ contract HelperConfig is Script {
     }
 
     function getEthSepoliaConfig() public pure returns (NetworkConfig memory) {
-        return NetworkConfig({entryPoint: 0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789, account: BURNER_WALLET, usdc: address(0) });
+        return NetworkConfig({
+            entryPoint: 0x5FF137D4b0FDCD49DcA30c7CF57E578a026d2789,
+            account: BURNER_WALLET,
+            usdc: address(0)
+        });
     }
 
     function getZkSyncSepoliaConfig() public pure returns (NetworkConfig memory) {
-        return NetworkConfig({entryPoint: address(0), account: BURNER_WALLET, usdc: address(0) });
+        return NetworkConfig({entryPoint: address(0), account: BURNER_WALLET, usdc: address(0)});
     }
 
-    function getOrCreateAnvilEthConfig() public  returns (NetworkConfig memory) {
+    function getOrCreateAnvilEthConfig() public returns (NetworkConfig memory) {
         if (localNetworkConfig.account != address(0)) {
             return localNetworkConfig;
         }
@@ -58,6 +62,6 @@ contract HelperConfig is Script {
         EntryPoint entryPoint = new EntryPoint();
         USDCMock usdMock = new USDCMock();
         vm.stopBroadcast();
-        return NetworkConfig ({entryPoint: address(entryPoint), account: ANVIL_DEFAULT_SENDER, usdc: address(usdMock)});
+        return NetworkConfig({entryPoint: address(entryPoint), account: ANVIL_DEFAULT_SENDER, usdc: address(usdMock)});
     }
 }
