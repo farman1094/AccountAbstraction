@@ -29,17 +29,21 @@ contract MinimalAccountTest is Test {
     // function execute(address dest, uint256 value, bytes calldata functionData) external requireEntryPointOrOwner {
     address dest = address(tokenUsdc);
     uint256 value = 0;
-    //     function allowance(address owner, address spender) external view returns (uint256);
 
-    vm.prank(msg.sender);
-    bytes memory functionData = abi.encodeWithSignature("allowance(address,address)", msg.sender, address(minimalAccount));
-    minimalAccount.execute(dest, value, functionData);
-
-    // function transfer(address to, uint256 value) external returns (bool);
-    bytes memory transferFromData = abi.encodeWithSignature("transfer(address,uint256)", address(minimalAccount), 5e18);
+    vm.startPrank(msg.sender); //0x5615dEB798BB3E4dFa0139dFa1b3D433Cc23b72f
     tokenUsdc.balanceOf(msg.sender);
-    vm.prank(address(this));
+    tokenUsdc.approve(address(minimalAccount), 5e18);
+
+    // function approve(address spender, uint256 value) public virtual returns (bool) {
+    bytes memory functionData = abi.encodeWithSignature("balanceOf(address)", msg.sender);
+    minimalAccount.execute(dest, value, functionData);
+    
+
+    // function transferFrom(address from, address to, uint256 value) public virtual returns (bool) {
+    bytes memory transferFromData = abi.encodeWithSignature("transferFrom(address,address,uint256)",msg.sender, address(minimalAccount), 5e18);
     minimalAccount.execute(dest, value, transferFromData);
+    assertEq(tokenUsdc.balanceOf(msg.sender), tokenUsdc.balanceOf(address(minimalAccount)));
+    vm.stopPrank();
 
 
 }
