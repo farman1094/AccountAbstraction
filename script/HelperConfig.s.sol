@@ -22,7 +22,7 @@ contract HelperConfig is Script {
     uint256 constant ETH_SEPOLIA_CHAIN_ID = 11155111;
 
     address constant BURNER_WALLET = 0x701477467321474712bACA6779FE8926528B3c93;
-    address constant ANVIL_DEFAULT_SENDER = 0x1804c8AB1F12E6bbf3894d4083f33e07309d1f38;
+    address constant ANVIL_DEFAULT_SENDER = 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266;
 
     constructor() {
         networkConfigs[ETH_SEPOLIA_CHAIN_ID] = getEthSepoliaConfig();
@@ -62,6 +62,8 @@ contract HelperConfig is Script {
         EntryPoint entryPoint = new EntryPoint();
         USDCMock usdMock = new USDCMock();
         vm.stopBroadcast();
-        return NetworkConfig({entryPoint: address(entryPoint), account: ANVIL_DEFAULT_SENDER, usdc: address(usdMock)});
+        localNetworkConfig =
+            NetworkConfig({entryPoint: address(entryPoint), account: ANVIL_DEFAULT_SENDER, usdc: address(usdMock)});
+        return localNetworkConfig;
     }
 }
