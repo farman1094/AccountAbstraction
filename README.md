@@ -1,8 +1,5 @@
-## About
-1. Create an basic Account Abstraction on Ethereum
-2. Create an basic Account Abstraction on zkSync
-3. Deploy, and send an userOp / Transaction through them
-   1. Not going to send an transaction on ethereum
-   2. But going to send an transaction on zkSync
+## Address
 
-git remote add origin https://github.com/farman1094/AccountAbstraction.git
+**Entry Point**: 0xef5116bF4B6A157698c2aFF675349d01cAA27927 (Entry deployed again)
+**Minimal Account**: 0x1d6630fca32021aB5068ab646AAc800934AdbC80
+
