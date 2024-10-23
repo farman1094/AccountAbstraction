@@ -50,8 +50,6 @@ contract HelperConfig is Script {
         });
     }
 
-  
-
     function getOrCreateAnvilEthConfig() public returns (NetworkConfig memory) {
         if (localNetworkConfig.account != address(0)) {
             return localNetworkConfig;
