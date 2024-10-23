@@ -3,7 +3,7 @@ pragma solidity ^0.8.24;
 
 import {HelperConfig} from "script/HelperConfig.s.sol";
 import {Script} from "forge-std/Script.sol";
-import {MinimalAccount} from "src/ethereum/MinimalAccount.sol";
+import {MinimalAccount} from "src/MinimalAccount.sol";
 
 contract DeployMinimalAccount is Script {
     HelperConfig.NetworkConfig config;

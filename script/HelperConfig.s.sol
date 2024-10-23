@@ -18,7 +18,6 @@ contract HelperConfig is Script {
     mapping(uint256 chainid => NetworkConfig) public networkConfigs;
 
     uint256 constant CHAIN_ID_ANVIL = 31337;
-    uint256 constant ZKSYNC_SEPOLIA_CHAIN_ID = 300;
     uint256 constant ETH_SEPOLIA_CHAIN_ID = 11155111;
 
     address constant BURNER_WALLET = 0x701477467321474712bACA6779FE8926528B3c93;
@@ -51,9 +50,7 @@ contract HelperConfig is Script {
         });
     }
 
-    function getZkSyncSepoliaConfig() public pure returns (NetworkConfig memory) {
-        return NetworkConfig({entryPoint: address(0), account: BURNER_WALLET, usdc: address(0)});
-    }
+  
 
     function getOrCreateAnvilEthConfig() public returns (NetworkConfig memory) {
         if (localNetworkConfig.account != address(0)) {

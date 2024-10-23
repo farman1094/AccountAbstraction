@@ -2,7 +2,7 @@
 pragma solidity ^0.8.24;
 
 import {Test} from "forge-std/Test.sol";
-import {MinimalAccount} from "src/ethereum/MinimalAccount.sol";
+import {MinimalAccount} from "src/MinimalAccount.sol";
 import {HelperConfig} from "script/HelperConfig.s.sol";
 import {DeployMinimalAccount} from "script/DeployMinimalAccount.s.sol";
 import {SendUserPackedUserOp} from "script/SendUserPackedUserOp.s.sol";
@@ -26,11 +26,9 @@ contract MinimalAccountTest is Test {
     address randomAddress = makeAddr("randomAddress");
 
     function setUp() public {
-        // vm.startBroadcast(msg.sender);
         DeployMinimalAccount deployer = new DeployMinimalAccount();
         sendUserPackedUserOp = new SendUserPackedUserOp();
         (helperConfig, minimalAccount) = deployer.run();
-        // vm.stopBroadcast();
         config = helperConfig.getConfig();
         tokenUsdc = USDCMock(config.usdc);
     }
@@ -89,6 +87,7 @@ contract MinimalAccountTest is Test {
             sendUserPackedUserOp.generateSignedUserOperation(executeData, config, address(minimalAccount));
         // (uint8 v, bytes32 r, bytes32 s) = abi.decode(userOp.signature, (uint8, bytes32, bytes32));
         // bytes32 signature = userOp.signature;
+        tokenUsdc.balanceOf(ANVIL_DEFAULT_SENDER);
         bytes32 userOpHash = IEntryPoint(config.entryPoint).getUserOpHash(userOp);
         address signer = ECDSA.recover(userOpHash.toEthSignedMessageHash(), userOp.signature);
 
@@ -137,7 +136,6 @@ contract MinimalAccountTest is Test {
             sendUserPackedUserOp.generateSignedUserOperation(executeData, config, address(minimalAccount));
         // bytes32 userOpHash = IEntryPoint(config.entryPoint).getUserOpHash(userOp);
         vm.deal(address(minimalAccount), 1e18);
-        // address(minimalAccount).balance;
 
         //ACT
         PackedUserOperation[] memory ops = new PackedUserOperation[](1);
